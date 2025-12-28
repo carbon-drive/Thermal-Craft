@@ -1,0 +1,25 @@
+{
+  "name": "thermal-craft",
+  "version": "1.0.0",
+  "description": "a simulation game about drawing floor heating plans and simulating them for performance",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "demo": "ts-node src/demo.ts",
+    "test": "ts-node test/test-suite.ts",
+    "example": "ts-node examples/complete-example.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1"
+  }
+}
