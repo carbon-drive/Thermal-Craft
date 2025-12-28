@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "demo": "ts-node src/demo.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ts-node test/test-suite.ts"
   },
   "keywords": [],
   "author": "",
