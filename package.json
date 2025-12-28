@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc",
     "demo": "ts-node src/demo.ts",
-    "test": "ts-node test/test-suite.ts"
+    "test": "ts-node test/test-suite.ts",
+    "example": "ts-node examples/complete-example.ts"
   },
   "keywords": [],
   "author": "",

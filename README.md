@@ -51,6 +51,26 @@ The demo showcases:
 - Material cost breakdown for QuickTherm system
 - Heat loss analysis for the Waschenbach House (Level 1 challenge)
 
+### Run the complete example
+```bash
+npm run example
+```
+
+The complete example demonstrates:
+- Full Level 1 challenge workflow
+- Multi-room heating system design
+- Window upgrade optimization
+- Budget allocation strategy
+- Performance metrics calculation
+- Challenge objective validation
+
+### Run tests
+```bash
+npm test
+```
+
+Validates all core functionality with 7 comprehensive tests.
+
 ## Project Structure
 
 ```
