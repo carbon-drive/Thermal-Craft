@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therma-Craft - Sanierungssimulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>Therma-Craft</h1>
+            <p>Sanierungssimulator für 1957er Grundrisse</p>
+        </header>
+        
+        <div class="container">
+            <aside class="sidebar">
+                <div class="panel">
+                    <h2>L-FLOOR Editor</h2>
+                    <textarea id="floor-dsl" rows="10" placeholder="# L-FLOOR DSL
+WALL 1 U=1.4 LENGTH=5.0 MATERIAL=HOHLBLOCK
+WINDOW 1 U=5.8 AREA=2.0 TYPE=EINFACHGLAS
+ROOM 1 AREA=25.0 TARGET=21.0"></textarea>
+                    <button id="parse-floor">Parse L-FLOOR</button>
+                </div>
+                
+                <div class="panel">
+                    <h2>P-PIPE Editor</h2>
+                    <textarea id="pipe-dsl" rows="8" placeholder="# P-PIPE DSL
+PIPE 1 START=(0,0) END=(5,0) RADIUS=0.016
+BEND 1 ANGLE=90 RADIUS=0.2 AT=(5,0)
+PIPE 2 START=(5,0) END=(5,3) RADIUS=0.016"></textarea>
+                    <button id="parse-pipe">Parse P-PIPE</button>
+                </div>
+                
+                <div class="panel cost-widget">
+                    <h2>Budget & Kosten</h2>
+                    <div class="cost-item">
+                        <span>Budget:</span>
+                        <span id="budget">15000 €</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Materialkosten:</span>
+                        <span id="material-cost">0 €</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Verbleibend:</span>
+                        <span id="remaining" class="remaining">15000 €</span>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2>Simulation</h2>
+                    <button id="run-simulation">Simulation starten</button>
+                    <div class="sim-results">
+                        <div class="result-item">
+                            <span>Vorlauftemperatur:</span>
+                            <span id="flow-temp">-- °C</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Raumtemperatur:</span>
+                            <span id="room-temp">-- °C</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Druckverlust:</span>
+                            <span id="pressure-loss">-- Pa</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Status:</span>
+                            <span id="goal-status">Nicht geprüft</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            
+            <main class="canvas-area">
+                <div class="toolbar">
+                    <button id="tool-select" class="tool-btn active">Auswählen</button>
+                    <button id="tool-pipe" class="tool-btn">Rohr zeichnen</button>
+                    <button id="tool-wall" class="tool-btn">Wand</button>
+                    <button id="tool-window" class="tool-btn">Fenster</button>
+                    <button id="clear-canvas" class="tool-btn danger">Löschen</button>
+                </div>
+                <canvas id="main-canvas" width="800" height="600"></canvas>
+                <div class="info-bar">
+                    <span>Grid: 12.5cm | Maus: <span id="mouse-pos">-</span></span>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

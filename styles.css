@@ -1,0 +1,197 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f0f0;
+    color: #333;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+}
+
+header p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 350px;
+    background: white;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.panel {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.panel h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    color: #667eea;
+}
+
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    resize: vertical;
+}
+
+button {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+#parse-floor, #parse-pipe, #run-simulation {
+    width: 100%;
+    margin-top: 0.5rem;
+    background: #667eea;
+    color: white;
+}
+
+#parse-floor:hover, #parse-pipe:hover, #run-simulation:hover {
+    background: #5568d3;
+}
+
+.cost-widget {
+    background: #e8f5e9;
+    border-color: #4caf50;
+}
+
+.cost-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #c8e6c9;
+}
+
+.cost-item:last-child {
+    border-bottom: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.remaining {
+    color: #4caf50;
+}
+
+.remaining.negative {
+    color: #f44336;
+}
+
+.sim-results {
+    margin-top: 0.8rem;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+}
+
+.canvas-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+}
+
+.toolbar {
+    background: white;
+    padding: 0.8rem;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tool-btn {
+    background: #f5f5f5;
+    color: #333;
+    padding: 0.5rem 1rem;
+}
+
+.tool-btn:hover {
+    background: #e0e0e0;
+}
+
+.tool-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.tool-btn.danger {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.tool-btn.danger:hover {
+    background: #ffcdd2;
+}
+
+#main-canvas {
+    flex: 1;
+    margin: 1rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: crosshair;
+}
+
+.info-bar {
+    background: white;
+    padding: 0.5rem 1rem;
+    border-top: 1px solid #ddd;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+#goal-status {
+    font-weight: bold;
+}
+
+#goal-status.success {
+    color: #4caf50;
+}
+
+#goal-status.failure {
+    color: #f44336;
+}
