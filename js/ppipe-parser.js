@@ -184,9 +184,12 @@ export class PPipeParser {
         });
 
         // Add bend losses (K-factor method)
+        const BEND_K_FACTOR_BASE = 0.5; // Base K-factor for bends
+        const REFERENCE_ANGLE = 90; // Reference angle for K-factor calculation
+        
         this.bends.forEach(bend => {
             // K-factor approximation based on angle
-            const kFactor = 0.5 * (bend.angle / 90);
+            const kFactor = BEND_K_FACTOR_BASE * (bend.angle / REFERENCE_ANGLE);
             const area = Math.PI * Math.pow(0.016, 2); // Assume standard radius
             const velocity = flowRate / area;
             const loss = kFactor * (density * Math.pow(velocity, 2) / 2);

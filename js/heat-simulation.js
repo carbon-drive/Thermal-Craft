@@ -49,10 +49,11 @@ export class HeatSimulation {
         const alpha = 0.0001; // Thermal diffusivity of concrete (m²/s)
         const dx = this.gridSize;
         const dt = deltaTime;
+        const STABILITY_THRESHOLD = 0.25; // CFL stability criterion
         
         // Stability criterion (CFL condition)
         const r = alpha * dt / (dx * dx);
-        if (r > 0.25) {
+        if (r > STABILITY_THRESHOLD) {
             console.warn('Simulation may be unstable. Consider smaller time step.');
         }
 

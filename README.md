@@ -71,7 +71,7 @@ Erreichen Sie:
 1. Repository klonen:
 ```bash
 git clone https://github.com/carbon-drive/Thermal-Craft.git
-cd Thermal-Craft
+cd Therma-Craft
 ```
 
 2. Öffnen Sie `index.html` in einem modernen Browser (Chrome, Firefox, Edge)
