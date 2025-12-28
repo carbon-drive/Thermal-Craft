@@ -10,6 +10,7 @@ import {
   calculateCircuitLength,
   calculatePressureLoss,
   isCriticalCircuit,
+  HYDRAULIC_CONSTANTS,
 } from '../models/PPipe';
 import {
   calculateBudget,
@@ -17,6 +18,22 @@ import {
   Budget,
   MATERIAL_COSTS_2025,
 } from '../models/CostAPI';
+
+/**
+ * Physical constants for heat transfer calculations
+ */
+const HEAT_TRANSFER_CONSTANTS = {
+  /** Specific heat capacity of water in J/(kg·K) */
+  WATER_SPECIFIC_HEAT: 4186,
+  /** Typical temperature drop in circuit in K */
+  TYPICAL_TEMP_DROP: 5,
+  /** Base heat output per meter of pipe in W/m */
+  BASE_HEAT_OUTPUT_PER_METER: 10,
+  /** Heat output multiplier per K temperature difference */
+  HEAT_OUTPUT_TEMP_COEFFICIENT: 2,
+  /** Standard room temperature for heat output estimates in °C */
+  STANDARD_ROOM_TEMP: 21,
+};
 
 export interface CircuitDesignParams {
   /** Room area in m² */
@@ -123,15 +140,13 @@ function calculateRequiredFlowRate(
   returnTemp: number
 ): number {
   const deltaT = supplyTemp - returnTemp;
-  const c_p = 4186; // Specific heat capacity of water in J/(kg·K)
-  const rho = 998.2; // Water density in kg/m³
 
   // Q = m_dot * c_p * ΔT
   // m_dot = Q / (c_p * ΔT)
-  const massFlowRate = heatOutput / (c_p * deltaT); // kg/s
+  const massFlowRate = heatOutput / (HEAT_TRANSFER_CONSTANTS.WATER_SPECIFIC_HEAT * deltaT); // kg/s
 
   // V_dot = m_dot / ρ
-  const volumeFlowRate = massFlowRate / rho; // m³/s
+  const volumeFlowRate = massFlowRate / HYDRAULIC_CONSTANTS.WATER_DENSITY; // m³/s
 
   // Convert to liters per hour
   return volumeFlowRate * 1000 * 3600;
@@ -156,12 +171,15 @@ function estimateHeatOutput(
   // Simplified heat transfer calculation
   // Q = k * A * ΔT where A is the effective heating area
   
-  const avgTemp = (supplyTemp + (supplyTemp - 5)) / 2; // Assume 5°C drop
+  // Calculate average temperature assuming typical circuit temperature drop
+  const avgTemp = (supplyTemp + (supplyTemp - HEAT_TRANSFER_CONSTANTS.TYPICAL_TEMP_DROP)) / 2;
   const deltaT = avgTemp - roomTemp;
   
   // Heat output per meter of pipe (typical for underfloor heating)
-  // Depends on spacing and temperature difference
-  const q_per_meter = 10 + (deltaT * 2); // W/m (simplified empirical formula)
+  // Empirical formula: base output + temperature-dependent component
+  const q_per_meter = 
+    HEAT_TRANSFER_CONSTANTS.BASE_HEAT_OUTPUT_PER_METER + 
+    (deltaT * HEAT_TRANSFER_CONSTANTS.HEAT_OUTPUT_TEMP_COEFFICIENT);
   
   return pipeLength * q_per_meter;
 }
@@ -223,11 +241,11 @@ export function solveHydraulicCircuit(
 
   const budget = calculateBudget(totalBudget, materialItems);
 
-  // Estimate heat output
+  // Estimate heat output using standard room temperature
   const estimatedOutput = estimateHeatOutput(
     totalLength,
     params.supply_temperature,
-    21, // Assume 21°C target room temperature
+    HEAT_TRANSFER_CONSTANTS.STANDARD_ROOM_TEMP,
     params.pipe_spacing
   );
 
