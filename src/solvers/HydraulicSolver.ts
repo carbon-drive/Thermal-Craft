@@ -160,19 +160,28 @@ function calculateRequiredFlowRate(
  * @param supplyTemp Supply temperature in °C
  * @param roomTemp Room temperature in °C
  * @param pipeSpacing Pipe spacing in meters
+ * @param returnTemp Optional return temperature in °C; if omitted, a typical temperature drop is assumed
  * @returns Estimated heat output in Watts
  */
 function estimateHeatOutput(
   pipeLength: number,
   supplyTemp: number,
   roomTemp: number,
-  pipeSpacing: number
+  pipeSpacing: number,
+  returnTemp?: number
 ): number {
   // Simplified heat transfer calculation
   // Q = k * A * ΔT where A is the effective heating area
-  
-  // Calculate average temperature assuming typical circuit temperature drop
-  const avgTemp = (supplyTemp + (supplyTemp - HEAT_TRANSFER_CONSTANTS.TYPICAL_TEMP_DROP)) / 2;
+
+  // Determine effective return temperature: use actual value when provided,
+  // otherwise fall back to the typical circuit temperature drop
+  const effectiveReturnTemp =
+    returnTemp !== undefined
+      ? returnTemp
+      : (supplyTemp - HEAT_TRANSFER_CONSTANTS.TYPICAL_TEMP_DROP);
+
+  // Calculate average temperature between supply and return temperatures
+  const avgTemp = (supplyTemp + effectiveReturnTemp) / 2;
   const deltaT = avgTemp - roomTemp;
   
   // Heat output per meter of pipe (typical for underfloor heating)
