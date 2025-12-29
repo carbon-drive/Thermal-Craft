@@ -77,11 +77,15 @@ export function calculateSegmentLength(segment: PipeSegment): number {
       const dx = segment.end.x - segment.start.x;
       const dy = segment.end.y - segment.start.y;
       const chordLength = Math.sqrt(dx * dx + dy * dy);
+      const radius = segment.bend_radius;
       
       // Use arc length formula: L = r * θ
       // where θ = 2 * arcsin(chord / (2*r))
-      const angle = 2 * Math.asin(chordLength / (2 * segment.bend_radius));
-      return segment.bend_radius * angle;
+      // Clamp the ratio to [-1, 1] to avoid domain errors in Math.asin
+      const ratio = chordLength / (2 * radius);
+      const clampedRatio = Math.max(-1, Math.min(1, ratio));
+      const angle = 2 * Math.asin(clampedRatio);
+      return radius * angle;
     } else if (segment.control_points && segment.control_points.length > 0) {
       // Approximate spline length using control points
       let length = 0;
