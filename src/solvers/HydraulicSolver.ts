@@ -6,7 +6,6 @@
 import {
   HeatingCircuit,
   PipeSegment,
-  Point2D,
   calculateCircuitLength,
   calculatePressureLoss,
   isCriticalCircuit,
