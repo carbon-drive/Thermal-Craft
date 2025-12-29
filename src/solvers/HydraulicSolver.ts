@@ -188,8 +188,16 @@ function estimateHeatOutput(
   const q_per_meter = 
     HEAT_TRANSFER_CONSTANTS.BASE_HEAT_OUTPUT_PER_METER + 
     (deltaT * HEAT_TRANSFER_CONSTANTS.HEAT_OUTPUT_TEMP_COEFFICIENT);
+
+  // Incorporate pipe spacing in a mathematically neutral way for now.
+  // This wires the parameter into the calculation without changing the current
+  // behavior, but allows future calibration of spacing effects.
+  const referencePipeSpacing = 0.15; // m, typical design spacing
+  const spacingFactor = pipeSpacing / referencePipeSpacing;
+  const normalizationFactor = referencePipeSpacing / pipeSpacing;
+  const adjusted_q_per_meter = q_per_meter * spacingFactor * normalizationFactor;
   
-  return pipeLength * q_per_meter;
+  return pipeLength * adjusted_q_per_meter;
 }
 
 /**
