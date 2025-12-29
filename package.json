@@ -12,6 +12,10 @@
   },
   "keywords": [],
   "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://example.com/thermal-craft.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
